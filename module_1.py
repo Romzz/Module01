@@ -189,7 +189,7 @@ def all_suc_who_have_increased_tuition_fee():
   csvFile = open('tuitionfeeperunitsucproglevel20102013.csv','r')
   data = csv.reader(csvFile)
   dic = []
-  col = 1
+  col = 2
   
   for row in data:
     try:
