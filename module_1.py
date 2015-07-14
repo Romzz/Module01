@@ -222,14 +222,84 @@ def all_suc_who_have_increased_tuition_fee():
 
 #7 which discipline has the highest passing rate?
 def get_discipline_with_highest_passing_rate_by_shool_year(school_year):
-  print "7. The discipline which has the highest passing rate is Accountancy"
+  csvFile = open('performancesucprclicensureexam20102012.csv','r')
+  data = csv.reader(csvFile)
+  dicPass = {}
+  dicTake = {}
+  dicRate  = {}
+  if school_year == "2010":
+    col = 3
+  elif school_year == "2011":
+    col = 4
+  elif school_year == "2012":
+    col = 5
+  else:
+    print "7. ERROR! Not included in tha database"
+    return 0
+
+  for row in data:
+    try:
+      if dicPass.has_key(row[2]) and row[2] != "Total" and row[2] != "-":
+        dicPass[row[2]] += int(row[col])
+        dicTake[row[2]] += int(row[col+4])
+      else:
+        dicPass[row[2]] = int(row[col])
+        dicTake[row[2]] = int(row[col+4])
+    except Exception:
+      pass
+  #print dicPass
+  #print dicTake
+
+  for d in dicPass:
+    try:
+      if d != "-":
+        dicRate[d] = (float(dicTake[d] -  float(dicPass[d]))/float(dicTake[d]))
+    except Exception:
+      pass
+  print("7. The discipline which has the highest passing rate is %s") % ((sorted(dicRate.items(), key=lambda (n,m): (-m,n)))[0][0])
+  
 
 #8 list top 3 SUC with the most passing rate by discipline by school year
 def get_top_3_suc_performer_by_discipline_by_year(discipline, school_year):
-  print "8. Top 3  SUC with highest passing rate in Accountancy for school year 2010-2011"
-  print "  1. Technological University of the Philippines"
-  print "  2. Marikina Polytechnic College"
-  print "  3. Apayao State College"
+  csvFile = open('performancesucprclicensureexam20102012.csv','r')
+  data = csv.reader(csvFile)
+  dicPass = {}
+  dicTake = {}
+  dicRate  = {}
+  if school_year == "2010":
+    col = 3
+  elif school_year == "2011":
+    col = 4
+  elif school_year == "2012":
+    col = 5
+  else:
+    print "8. ERROR! Not included in tha database"
+    return 0
+
+  for row in data:
+    try:
+      if row[2] == discipline:
+        if dicPass.has_key(row[1]):
+          dicPass[row[1]] += int(row[col])
+          dicTake[row[1]] += int(row[col+4])
+        else:
+          dicPass[row[1]] = int(row[col])
+          dicTake[row[1]] = int(row[col+4])
+    except Exception:
+      pass
+  #print dicPass
+  #print dicTake
+
+  for d in dicPass:
+    try:
+      if d != "-" and (dicPass[d]) != 0:
+        dicRate[d] = (float(dicTake[d] -  float(dicPass[d]))/float(dicTake[d]))
+    except Exception:
+      pass
+  print("8. list top 3 SUC with the most passing rate by discipline by school year")
+  print(" 1. %s") % ((sorted(dicRate.items(), key=lambda (n,m): (-m,n)))[0][0])
+  print(" 2. %s") % ((sorted(dicRate.items(), key=lambda (n,m): (-m,n)))[1][0])
+  print(" 3. %s") % ((sorted(dicRate.items(), key=lambda (n,m): (-m,n)))[2][0])
 
 
 
