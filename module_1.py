@@ -186,7 +186,39 @@ def get_top_3_most_expensive_by_school_year(level, school_year):
 
 #6 list all SUC who have increased their tuition fee from school year 2010-2011 to 2012-2013
 def all_suc_who_have_increased_tuition_fee():
-  return
+  csvFile = open('tuitionfeeperunitsucproglevel20102013.csv','r')
+  data = csv.reader(csvFile)
+  dic = []
+  col = 1
+  
+  for row in data:
+    try:
+      if int(row[col+3]) > int(row[col]):
+        dic.append(row[col-1])
+      elif int(row[col+4]) > int(row[col+1]):
+        dic.append(row[col-1])
+      elif int(row[col+5]) > int(row[col+2]):
+        dic.append(row[col-1])
+      elif int(row[col+6]) > int(row[col]):
+        dic.append(row[col-1])
+      elif int(row[col+7]) > int(row[col+1]):
+        dic.append(row[col-1])
+      elif int(row[col+8]) > int(row[col+2]):
+        dic.append(row[col-1])
+      elif int(row[col+6]) > int(row[col]+3):
+        dic.append(row[col-1])
+      elif int(row[col+7]) > int(row[col+4]):
+        dic.append(row[col-1])
+      elif int(row[col+8]) > int(row[col+5]):
+        dic.append(row[col-1])
+    except Exception:
+      pass
+
+  print "6. List of SUC who have increased their tuition fee from school year 2010-2011 to 2012-2013"
+  ctr = 1
+  for item in dic:
+    print("  %d. %s") % (ctr, item)
+    ctr += 1
 
 #7 which discipline has the highest passing rate?
 def get_discipline_with_highest_passing_rate_by_shool_year(school_year):
